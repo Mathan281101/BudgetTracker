@@ -11,6 +11,8 @@ type Props = {
   setAmount: (value: string) => void;
   note: string;
   setNote: (value: string) => void;
+  category: string;
+  setCategory: (value: string) => void;
   addTransaction: () => void;
 };
 
@@ -23,6 +25,8 @@ const TransactionForm: React.FC<Props> = ({
   setAmount,
   note,
   setNote,
+  category,
+  setCategory,
   addTransaction,
 }) => {
   return (
@@ -40,6 +44,13 @@ const TransactionForm: React.FC<Props> = ({
           <Picker.Item label="Post Office" value="PostOffice" />
         </Picker>
       </View>
+
+      <TextInput
+        placeholder="Category (e.g., Food, Rent, Salary)"
+        style={styles.input}
+        value={category}
+        onChangeText={setCategory}
+      />
 
       <TextInput
         placeholder="Amount"

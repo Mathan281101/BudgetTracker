@@ -1,20 +1,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
-
-type Transaction = {
-  id: string;
-  account: string;
-  type: 'income' | 'expense';
-  amount: number;
-  date: string;
-  note: string;
-};
+import { Transaction } from '../context/BudgetContext';
 
 type Props = {
   transactions: Transaction[];
   sortField: string;
   sortAsc: boolean;
-  toggleSort: (field: 'date' | 'amount' | 'type' | 'account') => void;
+  toggleSort: (field: 'date' | 'amount' | 'type' | 'account' | 'category') => void;
 };
 
 const TransactionTable: React.FC<Props> = ({ transactions, sortField, sortAsc, toggleSort }) => {
@@ -27,6 +19,10 @@ const TransactionTable: React.FC<Props> = ({ transactions, sortField, sortAsc, t
         </TouchableOpacity>
         <TouchableOpacity style={styles.cell} onPress={() => toggleSort('account')}>
           <Text style={styles.headerText}>Account</Text>
+        </TouchableOpacity>
+        {/* New Category Header */}
+        <TouchableOpacity style={styles.cell} onPress={() => toggleSort('category')}>
+          <Text style={styles.headerText}>Category {sortField === 'category' ? (sortAsc ? '↑' : '↓') : ''}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.cell} onPress={() => toggleSort('type')}>
           <Text style={styles.headerText}>Type {sortField === 'type' ? (sortAsc ? '↑' : '↓') : ''}</Text>
@@ -47,6 +43,8 @@ const TransactionTable: React.FC<Props> = ({ transactions, sortField, sortAsc, t
           <View style={styles.tableRow}>
             <Text style={styles.cell}>{item.date}</Text>
             <Text style={styles.cell}>{item.account}</Text>
+            {/* New Category Cell */}
+            <Text style={styles.cell}>{item.category || '-'}</Text>
             <Text style={styles.cell}>{item.type}</Text>
             <Text style={[styles.cell, item.type === 'income' ? styles.incomeText : styles.expenseText]}>
               ₹{item.amount.toLocaleString()}

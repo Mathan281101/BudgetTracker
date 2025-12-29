@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { AccountName } from '../context/BudgetContext';
 
 type Props = {
-  balances: Record<string, number>;
+  balances: Record<AccountName, number>;
 };
 
 const AccountBalances: React.FC<Props> = ({ balances }) => {
